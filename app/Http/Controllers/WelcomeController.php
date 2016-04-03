@@ -10,7 +10,7 @@ class WelcomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('web');
+        //$this->middleware('web');
     }
 
     public function index()  //2
