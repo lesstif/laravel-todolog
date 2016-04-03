@@ -22,3 +22,10 @@ Route::get('auth/github', 'Auth\AuthController@redirectToGitHub');
 
 //깃허브 인증이 완료되면 깃허브에서 앱 페이지를 호출할 때 실행할 메서드를 등록합니다
 Route::get('auth/github/callback', 'Auth\AuthController@handleGitHubCallback');
+
+// 인증을 거쳐야 사용할 수 있는 기능들
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::resource('project', 'ProjectController');
+    Route::resource('project.task', 'ProjectTaskController');
+});
