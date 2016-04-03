@@ -11,8 +11,14 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');  //1
+Route::get('/', 'WelcomeController@index');
 
 Route::get('/home', 'HomeController@index');
 
 Route::auth();
+
+// 사용자가 인증 요청했을 때 깃허브 인증 페이지로 리다이렉트합니다
+Route::get('auth/github', 'Auth\AuthController@redirectToGitHub');
+
+//깃허브 인증이 완료되면 깃허브에서 앱 페이지를 호출할 때 실행할 메서드를 등록합니다
+Route::get('auth/github/callback', 'Auth\AuthController@handleGitHubCallback');
