@@ -1,45 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Laravel</title>
+@extends('layouts.app')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
+    웰컴 페이지
+@endsection
 
-        <style>
-            html, body {
-                height: 100%;
-            }
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">라라벨 Todo 사이트</div> <!-- ① -->
 
-            body {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                display: table;
-                font-weight: 100;
-                font-family: 'Lato';
-            }
-
-            .container {
-                text-align: center;
-                display: table-cell;
-                vertical-align: middle;
-            }
-
-            .content {
-                text-align: center;
-                display: inline-block;
-            }
-
-            .title {
-                font-size: 96px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Laravel 5</div>
+                    <div class="panel-body">
+                        <div class="container">
+                            총 가입자 수 : {{ $total['user'] }}</p> <!-- ② -->
+                            프로젝트  수 : {{ $total['project'] }}</p>
+                            Task     수 : {{ $total['task'] }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection
