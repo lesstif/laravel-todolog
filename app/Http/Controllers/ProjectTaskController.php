@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\Http\Requests\StoreTaskRequest;
+
 class ProjectTaskController extends Controller
 {
     /**
@@ -46,14 +48,8 @@ class ProjectTaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $projId)
+    public function store(StoreTaskRequest  $request, $projId)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:tasks|max:20',
-            'priority' => 'in:낮음,보통,높음',
-            'due_date' => 'date|after:today',
-        ]);
-
         $task = new Task([    //1
             'name' => $request->get('name'),
             'description' => $request->get('description'),
