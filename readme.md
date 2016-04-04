@@ -2,6 +2,8 @@
 
 실전 프로젝트 파일 및 코드이며 실제 동작하는 소스는 **[https://todolog.lesstif.com](https://todolog.lesstif.com)** 에서 확인할 수 있습니다. 
 
+오탈자 문의 및 내용 문의는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주시고 정오표는 [errata.md](errata.md) 를 참고하세요
+
 설치는 다음 절차를 통해서 하시면 됩니다.
 
 ## 사전 준비 작업
@@ -12,63 +14,65 @@
   * Windows : c:\windows\system32\drivers\etc\hosts
   * OS X or Linux : /etc/hosts
 
-```
-192.168.10.10 todolog.app
-```
+    ```
+    192.168.10.10 todolog.app
+    ```
 
 ## 프로젝트 다운로드
 
 1. 사용하는 git 클라이언트로 프로젝트 소스를 로컬에 다운로드 받습니다.
-```
-git clone https://github.com/lesstif/laravel-todolog
-```
+    ```
+    git clone https://github.com/lesstif/laravel-todolog
+    ```
 
 2. 다운 받은 소스로 이동합니다
-```
-cd laravel-todolog
-```
+    ```
+    cd laravel-todolog
+    ```
 
 ## 의존성 설치
 
 컴포저로 의존성 라이브러리를 설치합니다.
 
-```
-composer install
-```
+    ```
+    composer install
+    ```
 
 ## 환경 설정
 
 1. 설정 파일을 복사합니다.
-```
- cp .env.example .env
-```
+    ```
+     cp .env.example .env
+    ```
 
-2. 세션 암호화등에 사용하는 애플리케이션 키를 생성합니다.
+1. 세션 암호화등에 사용하는 애플리케이션 키를 생성합니다.
+    ```
+     php artisan key:gen
+    ```
 
-```
- php artisan key:gen
-```
+1. 데이타 마이그레이션을 적용합니다.
+    ```
+    php artisan migrate:refresh
+    ```
 
-3. 데이타 마이그레이션을 적용합니다.
+1. 초기 데이타를 생성합니다.
+    ```
+    php artisan db:seed
+    ```
 
-```
-php artisan migrate:refresh
-```
+1. github 로 로그인하기를 사용하려면 .env 에 github 설정을 추가합니다.
+    ```
+    GITHUB_ID=id-here
+    GITHUB_SECRET=secret-here
+    GITHUB_URL=http://todolog.app/auth/github/callback
+    ```
 
-3. 초기 데이타를 생성합니다.
-
-```
-php artisan db:seed
-```
-
-4. github 로 로그인하기를 사용하려면 .env 에 github 설정을 추가합니다.
-
-```
-GITHUB_ID=id-here
-GITHUB_SECRET=secret-here
-GITHUB_URL=http://todolog.app/auth/github/callback
-```
-
+1. mailgun 으로 이메일을 전송하기 위해 .env 에 mailgun 설정을 추가합니다.
+    ```
+    MAIL_DRIVER=mailgun
+    MAILGUN_DOMAIN=your-host.mailgun.org
+    MAILGUN_SECRET=key-your-mailgun-secret
+    ```
 
 ## 테스트
 
