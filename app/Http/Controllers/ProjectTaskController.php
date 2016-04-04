@@ -48,6 +48,12 @@ class ProjectTaskController extends Controller
      */
     public function store(Request $request, $projId)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:tasks|max:20',
+            'priority' => 'in:낮음,보통,높음',
+            'due_date' => 'date|after:today',
+        ]);
+
         $task = new Task([    //1
             'name' => $request->get('name'),
             'description' => $request->get('description'),

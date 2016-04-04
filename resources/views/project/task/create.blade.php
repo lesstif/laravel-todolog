@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-        <form class="form-horizontal" role="form" method="POST" action="{{ route('project.task.store', [$proj->id]) }}"> //1
+        <form class="form-horizontal" role="form" method="POST" action="{{ route('project.task.store', [$proj->id]) }}"> {{--1--}}
             {{ csrf_field() }}
 
             <div class="form-group">
@@ -35,8 +35,8 @@
             <div class="form-group">
                 <label>우선순위</label>
                 <div>
-                    <select class="form-control" name="priority">       //2
-                        @foreach(['낮음' ,'보통', '높음'] as $p)
+                    <select class="form-control" name="priority">      {{--2--}}
+                        @foreach(['낮음' ,'보통', '높음','즉시'] as $p)
                             <option value="{{$p}}" {{ (old('priority') === $p) ? "selected" : "" }}>{{$p}}</option>
                         @endforeach
                     </select>
@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label>상태</label>
                 <div>
-                    <select class="form-control" name="status">         //3
+                    <select class="form-control" name="status">         {{--3--}}
                         @foreach(['등록', '진행', '완료'] as $s)
                             <option value="{{$s}}" {{ (old('status') === $s) ? "selected" : "" }}>{{$s}}</option>
                         @endforeach
@@ -62,7 +62,7 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#due_date').datetimepicker({     //4
+                        $('#due_date').datetimepicker({     {{--4--}}
                             locale: 'en',
                             defaultDate: '{{ (old('due_date')) ? old('due_date') : \Carbon\Carbon::now() }}',
                             format: 'YYYY-MM-DD HH:mm:ss'
