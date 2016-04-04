@@ -65,8 +65,25 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">휴대폰</label>
 
-                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="phone" value="{{ old('phone')}}" >
+
+                                @if ($errors->has('phone'))
+                                    <span class="help-block">
+                                    @foreach ($errors->get('phone') as $error)
+                                            <strong>{{ $error }}</strong></p>
+                                    @endforeach
+
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                            <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-user"></i>Register

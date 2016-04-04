@@ -57,6 +57,7 @@ return [
         'string'  => ':attribute은(는) 반드시 :min 자리보다 커야 합니다.',
         'array'   => ':attribute은(는) 반드시 :max 아이템보다 커야 합니다.',
     ],
+    'mobile_phone' => ':attribute 는 반드시 휴대폰 번호이어야 합니다.',
     'not_in'               => '선택된 :attribute은(는) 유효하지 않습니다.',
     'numeric'              => ':attribute은(는) 반드시 숫자여야 합니다.',
     'present'              => 'The :attribute field must be present.',
