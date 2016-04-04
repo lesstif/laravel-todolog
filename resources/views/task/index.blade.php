@@ -132,4 +132,7 @@
         </table>
     </div>
 
+    <div class="text-center">
+        {!! $tasks->render() !!}
+    </div>
 @endsection

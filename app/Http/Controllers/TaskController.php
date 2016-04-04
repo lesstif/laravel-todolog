@@ -37,7 +37,8 @@ class TaskController extends Controller
             ->otherParam($request)                        // 나머지 검색 조건
             ->with('project')                            //Eager loading
             ->orderBy('due_date', 'desc')
-            ->get();
+            //->get();
+            ->paginate(5);                               // pagination
 
         return view('task.index')
             ->with('tasks', $tasks)
