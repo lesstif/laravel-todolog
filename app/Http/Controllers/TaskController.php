@@ -35,6 +35,7 @@ class TaskController extends Controller
         $tasks = $user->tasks()
             ->dueDateBetween($start_date, $end_date)        // 쿼리 스코프
             ->otherParam($request)                        // 나머지 검색 조건
+            ->with('project')       //Eager loading
             ->orderBy('due_date', 'desc')
             ->get();
 
