@@ -28,4 +28,8 @@ Route::group(['middleware' => 'auth'], function()
 {
     Route::resource('project', 'ProjectController');
     Route::resource('project.task', 'ProjectTaskController');
+    Route::resource('task', 'TaskController', ['only' => [    // 1
+        'index', 'show',
+    ]]);
+
 });
