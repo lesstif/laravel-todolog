@@ -45,7 +45,8 @@ class TaskController extends Controller
             ->with('start_date', $start_date)
             ->with('end_date', $end_date)
             ->with('status', $request->get('status'))
-            ->with('priority', $request->get('priority'));
+            ->with('priority', $request->get('priority'))
+            ->with('query_param', $request->all());
     }
 
     /**

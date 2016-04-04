@@ -133,6 +133,6 @@
     </div>
 
     <div class="text-center">
-        {!! $tasks->render() !!}
+        {!! $tasks->appends($query_param)->render()  !!}
     </div>
 @endsection
