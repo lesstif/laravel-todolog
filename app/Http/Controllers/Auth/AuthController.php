@@ -66,6 +66,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        \Redis::incr('user:count');
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

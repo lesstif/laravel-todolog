@@ -52,6 +52,12 @@ class ProjectController extends Controller
 
         $proj->save();
 
+        \Redis::incr('project:count');
+
+        \Log::info('Project 등록 성공',
+            ['user-id'=> $user->id, 'project-id'=>$proj->id]
+        );
+
         return redirect('/project')
             ->with('message', $proj->name . ' 이 생성되었습니다.');
 
@@ -119,11 +125,13 @@ class ProjectController extends Controller
     {
         $proj = Project::findOrFail($id);
 
-        foreach($proj->tasks()->get() as $task) {    //1
+        foreach($proj->tasks()->get() as $task) {    //자식 레코드 먼저 삭제
             $task->delete();
         }
 
-        $proj->delete();    // 2
+        $proj->delete();   // 삭제
+
+        \Redis::decr('project:count'); //
 
         return redirect('/project')
             ->with('message', '프로젝트 ' . $proj->name  . ' 이 삭제되었습니다.');

@@ -58,9 +58,11 @@ class ProjectTaskController extends Controller
             'due_date' => $request->get('due_date'),
         ]);
 
-        $task->project()->associate($projId);;    //2
+        $task->project()->associate($projId);;    //프로젝트 연결
 
-        $task->save();    //3
+        $task->save();    //DBMS 저장
+
+        \Redis::incr('task:count');
 
         return redirect(route('project.task.index', $task->project->id))
             ->with('message', $task->name . ' 가 생성 되었습니다.');
@@ -142,6 +144,13 @@ class ProjectTaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::findOrFail($id);
+
+        $task->delete();   // 삭제
+
+        \Redis::decr('task:count'); // 갯수 감소
+
+        return redirect(route('project.task.index', $task->project->id))
+            ->with('message', $task->name . '이 삭제되었습니다.');
     }
 }

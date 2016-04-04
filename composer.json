@@ -11,7 +11,8 @@
         "caouecs/laravel4-lang": "~2.0",
         "barryvdh/laravel-debugbar": "~2.0",
         "laravel/socialite": "^2.0",
-        "guzzlehttp/guzzle": "~5.3|~6.0"
+        "guzzlehttp/guzzle": "~5.3|~6.0",
+        "predis/predis": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
