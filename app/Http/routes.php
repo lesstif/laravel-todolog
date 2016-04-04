@@ -32,4 +32,5 @@ Route::group(['middleware' => 'auth'], function()
         'index', 'show',
     ]]);
 
+    Route::get('/reminder/{userid}/{dueInDays?}', 'ReminderController@sendEmailReminder');
 });
