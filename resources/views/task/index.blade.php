@@ -8,7 +8,7 @@
 
     <div class="col-md-12">
 
-        <form class="form-horizontal" role="form" method="GET" action="{{ route('task.index')}}">    //1
+        <form class="form-horizontal" role="form" method="GET" action="{{ route('task.index')}}">
             <div class="container">
                 <div class='col-md-3'>
                     <div class="form-group">
@@ -36,8 +36,8 @@
                     <div class="form-group">
                         <label for="순위">우선순위</label>
                         <select class="form-control" name="priority">
-                            @foreach(['all', '낮음', '보통', '높음'] as $p)    //2
-                            <option value="{{$p}}">{{$p}}</option>
+                            @foreach(['all', '낮음', '보통', '높음'] as $p)
+                                <option value="{{$p}}" {{ ($priority === $p) ? "selected" : "" }}>{{$p}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -46,8 +46,8 @@
                     <div class="form-group">
                         <label for="상태">상태</label>
                         <select class="form-control" name="status">
-                            @foreach(['all','등록', '진행', '완료'] as $s)    //3
-                            <option value="{{$s}}">{{$s}}</option>
+                            @foreach(['all','등록', '진행', '완료'] as $s)
+                                <option value="{{$s}}" {{ ($status === $s) ? "selected" : "" }}>{{$s}}</option>
                             @endforeach
                         </select>
                     </div>
