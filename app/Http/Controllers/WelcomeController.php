@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Redis;
+
 class WelcomeController extends Controller
 {
     public function __construct()
