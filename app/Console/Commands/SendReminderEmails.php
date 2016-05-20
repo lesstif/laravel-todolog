@@ -56,8 +56,14 @@ class SendReminderEmails extends Command
             $users = User::all();
         }
 
+        $total = 0;
+
         foreach($users as $user) {
             $tasks = $user->tasks()->dueInDays($dueInDay)->get();
+
+            if ($tasks->count() == 0) continue;
+
+            $total++;
 
             $data = [
                 'user' => $user,
@@ -75,7 +81,7 @@ class SendReminderEmails extends Command
             $this->info("$user->id 에게 태스크 알림 메일 전송");    //4
         }
 
-        $this->info($users->count() .' 건의 태스크 알림 메일 전송 완료');
+        $this->info($total .' 건의 태스크 알림 메일 전송 완료');
     }
 
 }
