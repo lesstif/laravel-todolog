@@ -1,24 +1,10 @@
 # 쉽게 배우는 라라벨 5 프로그래밍 실전 예제 코드
 
-* [쉽게 배우는 라라벨 5 프로그래밍 실전 예제 코드](#쉽게-배우는-라라벨-5-프로그래밍-실전-예제-코드)
-    * [사전 작업](#사전-작업)
-      * [Homestead 개발 환경 구성 - VM 환경](#homestead-개발-환경-구성---vm-환경)
-      * [로컬 개발 환경 구성](#로컬-개발-환경-구성)
-        * [Windows - XAMPP](#windows---xampp)
-        * [Mac OS X - MAMP](#mac-os-x---mamp)
-        * [설치후 할 일](#설치후-할-일)
-    * [프로젝트 다운로드](#프로젝트-다운로드)
-    * [의존성 설치](#의존성-설치)
-    * [환경 설정](#환경-설정)
-    * [테스트](#테스트)
-
-
 실전 프로젝트 파일 및 코드이며 실제 동작하는 소스는 **[https://todolog.lesstif.com](https://todolog.lesstif.com)** 에서 확인할 수 있습니다. 
 
 오탈자 문의 및 내용 문의는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주시고 정오표는 [errata.md](errata.md) 를 참고하세요
 
 설치는 다음 절차를 통해서 하시면 됩니다.
-
 
 ## 사전 작업
 
@@ -47,13 +33,13 @@
 
 #### Windows - XAMPP
 
-[Windows에 WAMP 설치하기](https://www.lesstif.com/pages/viewpage.action?pageId=24445298) 를 참고해서 XAMPP 스택을 설치합니다.
+[Windows에 WAMP 와 composer 설치하기](https://www.lesstif.com/pages/viewpage.action?pageId=24445298) 를 참고해서 XAMPP 스택과 컴포저를 설치합니다.
 
 #### Mac OS X - MAMP
 
-[Mac OS X 에 MAMP 설치](https://www.lesstif.com/pages/viewpage.action?pageId=24445298) 를 참고해서 MAMP 스택을 설치합니다.
+[Mac OS X 에 MAMP 와 composer 설치](https://www.lesstif.com/pages/viewpage.action?pageId=24445298) 를 참고해서 MAMP 스택과 컴포저를 설치합니다.
 
-#### 설치후 할 일
+#### AMP 설치후 할 일
 
 1. 서비스 url 인 todolog.app 를 hosts 파일에 추가합니다. 로컬 환경이므로 IP는 127.0.0.1 입니다.
 
@@ -89,8 +75,9 @@
 
  브라우저로 http://todolog.app:8000/i.php 포트에 연결해서 정상 동작을 확인합니다.
 
+## 설정
 
-## 프로젝트 다운로드
+### 프로젝트 다운로드
 
 1. 사용하는 git 클라이언트로 프로젝트 소스를 로컬에 다운로드 받습니다.
     ```
@@ -102,7 +89,7 @@
     cd laravel-todolog
     ```
 
-## 의존성 설치
+### 의존성 설치
 
 컴포저로 의존성 라이브러리를 설치합니다.
 
@@ -110,7 +97,7 @@
 composer install
 ```
 
-## 환경 설정
+### 환경 설정
 
 1. 설정 파일을 복사합니다.
     ```
@@ -146,10 +133,19 @@ composer install
     MAILGUN_SECRET=key-your-mailgun-secret
     ```
 
-## 테스트
+### 테스트
 
 
 브라우저에서 http://todolog.app(VM 환경) 또는 http://todolog.app:8000/(로컬 환경) 에 연결해서 초기 화면이 보이는지 확인합니다.
 
 
 1부의 예제 코드는 [laravel-example] 폴더를 참고하세요.
+
+## 배포
+
+배포 환경을 구성하기 위해 사용한 명령어들은 아래 gist 를 참고하세요.
+
+
+* [ubuntu 16 LTS](https://gist.github.com/lesstif/789b69158028040f234c8b853ecf13b6)
+* [ubuntu 14 LTS](https://gist.github.com/lesstif/5bd471dfa6c7fd15e0af)
+* [RHEL/CentOS 7] - 추가 예정
