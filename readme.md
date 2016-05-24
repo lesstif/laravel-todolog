@@ -49,14 +49,18 @@
 
 1. php 버전 확인
 
- 윈도라면 cmd.exe를 Mac OS 는 터미널을 열고 다음 명령을 실행하여 PHP 의 버전을 확인합니다.
+ 윈도라면 cmd.exe를 Mac OS 는 터미널을 열고  *php -v*  명령을 실행하여 PHP 버전이 5.5.9 이상인지 확인합니다.
   ```
   php -v
+
+PHP 5.6.14 (cli) (built: Sep 30 2015 14:32:12)
+Copyright (c) 1997-2015 The PHP Group
+Zend Engine v2.6.0, Copyright (c) 1998-2015 Zend Technologies
   ```
 
 1. php 내장 웹 서버 구동
 
- 8000 포트에 내장 웹 서버를 띄웁니다.
+ 8000 포트에 내장 웹 서버를 띄웁니다. 만약 다른 포트를 사용할 경우 8000 대신 사용할 포트 번호를 입력합니다.
  ```
  php -S 0.0.0.0:8000
  ```
@@ -73,7 +77,18 @@
 
 1. 브라우저로 연결
 
- 브라우저로 http://todolog.app:8000/i.php 포트에 연결해서 정상 동작을 확인합니다.
+ 브라우저로 http://todolog.app:8000/i.php 포트에 연결해서 PHP 버전과 필요한 확장 모듈이 표시되는지 확인합니다.
+
+  | 프로그램/모듈  | 비고 |
+  | ------------- | ------------- |
+  | PHP  | >= 5.5.9  |
+  | OpenSSL  Extension  |    |
+  | PDO  Extension  |    |
+  | Mbstring  Extension  |    |
+  | Tokenizer  Extension  |    |
+
+ ![PHP 설치 확인](https://cloud.githubusercontent.com/assets/404534/15501703/dbf2b3b2-21e9-11e6-8bb7-a18f7297fa59.png "PHP 설치 확인")
+
 
 ## 설정
 
@@ -136,7 +151,7 @@ composer install
 ### 테스트
 
 
-브라우저에서 http://todolog.app(VM 환경) 또는 http://todolog.app:8000/(로컬 환경) 에 연결해서 초기 화면이 보이는지 확인합니다.
+브라우저에서 http://todolog.app (VM 환경) 또는 http://todolog.app:포트번호/ (로컬 환경) 에 연결해서 초기 화면이 보이는지 확인합니다.
 
 
 1부의 예제 코드는 [laravel-example] 폴더를 참고하세요.
