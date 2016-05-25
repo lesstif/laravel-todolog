@@ -2,7 +2,10 @@
 
 실전 프로젝트 파일 및 코드이며 실제 동작하는 소스는 **[https://todolog.lesstif.com](https://todolog.lesstif.com)** 에서 확인할 수 있습니다. 
 
-오탈자 문의 및 내용 문의는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주시고 정오표는 [errata.md](errata.md) 를 참고하세요
+소스 관련 문의 및 오탈자 신고는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주세요
+
+- [정오표](errata.md) 참고
+- [vagrant FAQ 및 에러 처리 내역](https://www.lesstif.com/pages/viewpage.action?pageId=28606663) - VirtualBox 와 Vagrant 로 개발 환경 구성시 발생하는 문제 정리
 
 **문의시 요청 사항**
 
