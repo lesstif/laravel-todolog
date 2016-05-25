@@ -4,6 +4,44 @@
 
 오탈자 문의 및 내용 문의는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주시고 정오표는 [errata.md](errata.md) 를 참고하세요
 
+**문의시 요청 사항**
+
+내용 문의시 원활한 지원을 위해 사용 환경을 같이 기술해 주세요.
+
+1. 환경이 Homestead 가 아닌 경우 **PHP 의 버전**을 같이 기술해 주세요.
+
+  ```
+  $ php -v
+
+  PHP 7.0.2-1+deb.sury.org~trusty+1 (cli) ( NTS )
+  Copyright (c) 1997-2015 The PHP Group
+  Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
+    with Zend OPcache v7.0.6-dev, Copyright (c) 1999-2015, by Zend Technologies
+  ```
+
+1. laravel 버전
+
+  아래 명령어로 라라벨 버전을 확인후 알려주세요.
+
+  ```
+  $ php artisan --version
+
+  Laravel Framework version 5.2.29
+  ```
+
+**VirtualBox/Vagrant Homestead 설정 문의**
+
+*VirtualBox/Vagrant Homestead* 설정 오류는 저자의 지원 능력을 벗어나지만 최대한 제가 재연하고 도와드릴수 있도록 아래처럼 상세한 버전을 적어 주셔야 합니다.
+
+  ```sh
+  Win 7, VirtualBox - 5.0.20, Vagrant 1.8.1, Homestead 0.4.4
+  ```
+
+
+  ```sh
+  Mac OS 10.10.2 , VirtualBox - 5.0.18, Vagrant 1.8.1, Homestead 0.4.4
+  ```
+
 설치는 다음 절차를 통해서 하시면 됩니다.
 
 ## 사전 작업
@@ -38,56 +76,6 @@
 #### Mac OS X - MAMP
 
 [Mac OS X 에 MAMP 와 composer 설치](https://www.lesstif.com/pages/viewpage.action?pageId=24445298) 를 참고해서 MAMP 스택과 컴포저를 설치합니다.
-
-#### AMP 설치후 할 일
-
-1. 서비스 url 인 todolog.app 를 hosts 파일에 추가합니다. 로컬 환경이므로 IP는 127.0.0.1 입니다.
-
-  ```
-  127.0.0.1 todolog.app
-  ```
-
-1. php 버전 확인
-
- 윈도라면 cmd.exe를 Mac OS 는 터미널을 열고  *php -v*  명령을 실행하여 PHP 버전이 5.5.9 이상인지 확인합니다.
-  ```
-  php -v
-
-PHP 5.6.14 (cli) (built: Sep 30 2015 14:32:12)
-Copyright (c) 1997-2015 The PHP Group
-Zend Engine v2.6.0, Copyright (c) 1998-2015 Zend Technologies
-  ```
-
-1. php 내장 웹 서버 구동
-
- 8000 포트에 내장 웹 서버를 띄웁니다. 만약 다른 포트를 사용할 경우 8000 대신 사용할 포트 번호를 입력합니다.
- ```
- php -S 0.0.0.0:8000
- ```
-
-1. phpinfo 작성
-
- php 내장 웹 서버를 구동한 폴더에 *phpinfo()* 함수를 호출하는 i.php 파일을 만듭니다.
-
- ```php
- <?php
-
- phpinfo();
- ```
-
-1. 브라우저로 연결
-
- 브라우저로 http://todolog.app:8000/i.php 포트에 연결해서 PHP 버전과 필요한 확장 모듈이 표시되는지 확인합니다.
-
-  | 프로그램/모듈  | 비고 |
-  | ------------- | ------------- |
-  | PHP  | >= 5.5.9  |
-  | OpenSSL  Extension  |    |
-  | PDO  Extension  |    |
-  | Mbstring  Extension  |    |
-  | Tokenizer  Extension  |    |
-
- ![PHP 설치 확인](https://cloud.githubusercontent.com/assets/404534/15501703/dbf2b3b2-21e9-11e6-8bb7-a18f7297fa59.png "PHP 설치 확인")
 
 
 ## 설정
