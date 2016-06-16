@@ -1,6 +1,91 @@
 # 쉽게 배우는 라라벨 5 프로그래밍 정오표
 
-| Page  | Line | 변경전| 변경후 | 비고 |
-| ------------- | ------------- |  ------------- |  ------------- |   ------------- |
-| 10  | 3 ~ 4  | 예제1 | 예제| |
-| 11  | 3 ~ 4  | 예제2 | 예제| |
+#### 1.7 의존성 주입과 제어 역전
+
+p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(*RepositoryInterface*) 삭제
+
+**변경전**
+
+```php
+RepositoryInterface $repos = new UserRepository();
+```
+
+**변경후**
+
+```php
+$repos = new UserRepository();
+```
+
+**변경전**
+
+```php
+RepositoryInterface $repos = new MySQLUserRepository();
+```
+
+**변경후**
+
+```php
+$repos = new MySQLUserRepository();
+```
+
+#### 14.5 익명 함수
+
+##### 콜론 누락(:)
+
+p.447 endforeach 앞에 콜론(:) 누락
+
+**변경전**
+
+```php
+<?php foreach ($list as $u): ?>
+    <li> <?php echo $u['name']; ?> </li>
+<?php endforeach; ?>
+```
+
+**변경후**
+
+```php
+<?php foreach ($list as $u): ?>
+    <li> <?php echo $u['name']; ?> </li>
+<?php :endforeach; ?>	// 수정
+```
+
+##### 세미콜론(;) 누락
+
+p.447 익명 함수 뒤에 세미콜론(;) 누락
+
+**예제 14.18 : 변경전**
+
+```php
+$hello = function ($name, $age) {
+  return "name:" . $name . " age: " . $age;
+}
+```
+
+** 변경후 **
+
+```php
+$hello = function ($name, $age) {
+  return "name:" . $name . " age: " . $age;
+};	// 수정
+```
+
+**예제 14.19 : 변경전**
+
+```php
+$hello = function() use ($name, $age) {
+  return "name:" . $name . " age: " . $age;
+}
+```
+
+** 변경후 **
+
+```php
+$hello = function() use ($name, $age) {
+  return "name:" . $name . " age: " . $age;
+};	// 수정
+```
+
+#### 14.6 동적 프로퍼티/메서드 생성
+
+p.449 마지막 줄 *__callstatic* 을 *__callStatic* 으로 변경
