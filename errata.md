@@ -30,9 +30,7 @@ $repos = new MySQLUserRepository();
 
 #### 14.5 익명 함수
 
-##### 콜론 누락(:)
-
-p.447 endforeach 앞에 콜론(:) 누락
+##### p.447 endforeach 앞에 콜론(:) 누락
 
 **변경전**
 
@@ -50,9 +48,7 @@ p.447 endforeach 앞에 콜론(:) 누락
 <?php :endforeach; ?>	// 수정
 ```
 
-##### 세미콜론(;) 누락
-
-p.447 익명 함수 뒤에 세미콜론(;) 누락
+##### p.447 익명 함수 뒤에 세미콜론(;) 누락
 
 **예제 14.18 : 변경전**
 
@@ -62,7 +58,7 @@ $hello = function ($name, $age) {
 }
 ```
 
-** 변경후 **
+**변경후**
 
 ```php
 $hello = function ($name, $age) {
@@ -78,7 +74,7 @@ $hello = function() use ($name, $age) {
 }
 ```
 
-** 변경후 **
+**변경후**
 
 ```php
 $hello = function() use ($name, $age) {
