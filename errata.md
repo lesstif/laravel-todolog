@@ -30,24 +30,6 @@ $repos = new MySQLUserRepository();
 
 #### 14.5 익명 함수
 
-##### p.447 endforeach 앞에 콜론(:) 누락
-
-**변경전**
-
-```php
-<?php foreach ($list as $u): ?>
-    <li> <?php echo $u['name']; ?> </li>
-<?php endforeach; ?>
-```
-
-**변경후**
-
-```php
-<?php foreach ($list as $u): ?>
-    <li> <?php echo $u['name']; ?> </li>
-<?php :endforeach; ?>	// 수정
-```
-
 ##### p.447 익명 함수 뒤에 세미콜론(;) 누락
 
 **예제 14.18 : 변경전**
