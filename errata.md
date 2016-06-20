@@ -2,7 +2,23 @@
 
 #### 1.7 의존성 주입과 제어 역전
 
-p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(*RepositoryInterface*) 삭제
+##### p.38 *implements RepositoryInterface* 구문 삭제
+
+생성자를 통해 의존성을 주입하므로 implements 구문 불필요
+
+**변경전**
+
+```php
+class UserRepository implements RepositoryInterface {
+```
+
+**변경후**
+
+```php
+class UserRepository {
+```
+
+##### p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(*RepositoryInterface*) 삭제
 
 **변경전**
 
