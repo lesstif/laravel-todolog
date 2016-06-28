@@ -44,6 +44,16 @@ RepositoryInterface $repos = new MySQLUserRepository();
 $repos = new MySQLUserRepository();
 ```
 
+##### p.124 오타 수정
+
+**변경전**
+
+테이블에 입력한 key와 **a**에서 
+
+**변경후**
+
+테이블에 입력한 key와 **1번**에서
+
 #### 14.5 익명 함수
 
 ##### p.447 익명 함수 뒤에 세미콜론(;) 누락
