@@ -54,6 +54,35 @@ $repos = new MySQLUserRepository();
 
 테이블에 입력한 key와 **1번**에서
 
+##### p.203 SQL 조건 누락 수정
+
+**변경전**
+
+최종 검색 조건은 아래와 같이 SQL로 변환되어 id가 10보다 크고 20보다 작은 모델을 name 칼럼을 기준으로 내림차순으로 정렬한후에 ..
+
+```sql
+select * from task where id > '10' and id < '20' order by name desc limit 3 offset 5;
+```
+
+**변경후**
+
+최종 검색 조건은 아래와 같이 SQL로 변환되어 id가 10보다 크고 20보다 작고 **name 칼럼이 'Ta'로 시작하는** 모델을 name 칼럼을 기준으로 내림차순으로 정렬한후에 ..
+
+```sql
+select * from task where id > '10' and id < '20' and name like 'Ta%' order by name desc limit 3 offset 5;
+```
+
+**변경전**
+
+```php
+RepositoryInterface $repos = new MySQLUserRepository();
+```
+
+**변경후**
+
+```php
+$repos = new MySQLUserRepository();
+
 #### 14.5 익명 함수
 
 ##### p.447 익명 함수 뒤에 세미콜론(;) 누락
