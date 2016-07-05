@@ -1,5 +1,13 @@
 # 쉽게 배우는 라라벨 5 프로그래밍 정오표
 
+* [1.7 의존성 주입과 제어 역전](#17-의존성-주입과-제어-역전)
+  * [p.38 <em>implements RepositoryInterface</em> 구문 삭제](#p38-implements-repositoryinterface-구문-삭제)
+  * [p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(<em>RepositoryInterface</em>) 삭제](#p36--p38-까지-변수-선언-앞에-타입-지정repositoryinterface-삭제)
+* [p.112 첫 번째 줄 오타 수정](#p112-첫-번째-줄-오타-수정)
+* [p.124 오타 수정](#p124-오타-수정)
+* [p.203 SQL 조건 누락 수정](#p203-sql-조건-누락-수정)
+* [14.6 동적 프로퍼티/메서드 생성](#146-동적-프로퍼티메서드-생성)
+
 #### 1.7 의존성 주입과 제어 역전
 
 ##### p.38 *implements RepositoryInterface* 구문 삭제
@@ -43,6 +51,16 @@ RepositoryInterface $repos = new MySQLUserRepository();
 ```php
 $repos = new MySQLUserRepository();
 ```
+
+##### p.112 첫 번째 줄 오타 수정
+
+**변경전**
+
+\>는 **\&lt;**로 변경
+
+**변경후**
+
+\>는 **\&gt;**로 변경
 
 ##### p.124 오타 수정
 
