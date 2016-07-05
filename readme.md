@@ -139,6 +139,11 @@ composer install
     MAILGUN_SECRET=key-your-mailgun-secret
     ```
 
+1. 운영 환경일 경우 웹 서버 구동 계정(Ex: ubuntu의 경우 www-data)이 *bootstrap/cache/* 와 *storage* 폴더를 읽고 쓸 수 있도록 권한을 줘야 합니다.
+    ```sh
+    chmod -R 777 bootstrap/cache/ storage
+    ```
+
 ### 테스트
 
 
