@@ -3,8 +3,10 @@
 * [1.7 의존성 주입과 제어 역전](#17-의존성-주입과-제어-역전)
   * [p.38 <em>implements RepositoryInterface</em> 구문 삭제](#p38-implements-repositoryinterface-구문-삭제)
   * [p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(<em>RepositoryInterface</em>) 삭제](#p36--p38-까지-변수-선언-앞에-타입-지정repositoryinterface-삭제)
+* [p.102 오타 수정](#p102-오타-수정)
 * [p.112 첫 번째 줄 오타 수정](#p112-첫-번째-줄-오타-수정)
 * [p.124 오타 수정](#p124-오타-수정)
+* [p.159 오타 수정](#p159-오타-수정)
 * [p.203 SQL 조건 누락 수정](#p203-sql-조건-누락-수정)
 * [p.424 cron 스케줄러 설정](#p424-cron-스케줄러-설정)
 * [14.6 동적 프로퍼티/메서드 생성](#146-동적-프로퍼티메서드-생성)
@@ -53,6 +55,23 @@ RepositoryInterface $repos = new MySQLUserRepository();
 $repos = new MySQLUserRepository();
 ```
 
+##### p.102 오타 수정
+
+Illuminate 패키지 네임스페이스 오타 수정
+
+**변경전**
+
+```php
+use llluminate\Http\Response;
+```
+
+**변경후**
+
+```php
+use Illuminate\Http\Response;
+```
+
+
 ##### p.112 첫 번째 줄 오타 수정
 
 **변경전**
@@ -72,6 +91,16 @@ $repos = new MySQLUserRepository();
 **변경후**
 
 테이블에 입력한 key와 **1번**에서
+
+##### p.159 오타 수정
+
+**변경전**
+
+ADD **Commnet** varchar(100) 
+
+**변경후**
+
+ADD **Comment** varchar(100) 
 
 ##### p.203 SQL 조건 누락 수정
 
