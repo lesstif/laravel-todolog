@@ -131,6 +131,20 @@ RepositoryInterface $repos = new MySQLUserRepository();
 ```php
 $repos = new MySQLUserRepository();
 
+**변경전**
+
+```
+where('id', '>', 10)와 같이 공백이 있는 다음과 같은 PDO
+```
+
+**변경후**
+
+설명대로라면 아래와 같이 공백이 추가되어야 합니다. 또 라라벨 5.2 에서는 PDOException 이 발생하지 않습니다.
+
+```
+where('id', '> ', 10)와 같이 공백이 있는 다음과 같은 PDO
+```
+
 #### 14.5 익명 함수
 
 ##### p.447 익명 함수 뒤에 세미콜론(;) 누락
