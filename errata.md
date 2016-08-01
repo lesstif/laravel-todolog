@@ -7,6 +7,7 @@
 * [p.112 첫 번째 줄 오타 수정](#p112-첫-번째-줄-오타-수정)
 * [p.124 오타 수정](#p124-오타-수정)
 * [p.159 오타 수정](#p159-오타-수정)
+* [p.197 Route::controller deprecated](#p197-route-controller-deprecated)
 * [p.203 SQL 조건 누락 수정](#p203-sql-조건-누락-수정)
 * [p.424 cron 스케줄러 설정](#p424-cron-스케줄러-설정)
 * [14.6 동적 프로퍼티/메서드 생성](#146-동적-프로퍼티메서드-생성)
@@ -101,6 +102,15 @@ ADD **Commnet** varchar(100)
 **변경후**
 
 ADD **Comment** varchar(100) 
+
+##### p.197 route controller deprecated
+
+[이동한](https://github.com/linuxwife)님이 알려주신 대로 라라벨 5.2 부터 *Route::controller* 는 deprecated 되었고 5.3에서는 삭제 예정입니다.
+
+책 p.148 에서도 암시적 컨트롤러는 전체 라우팅이 가려지므로 권장하지 않는다고 기술했는데 p.197 에서 사용한 이유는 ORM 테스트용 예제 메서드를 일일이 라우팅에 기술하기 불편했기 때문입니다.
+
+독자분들은 실전에서는 *Route::controller* 를 사용하지 않으시기 바랍니다.
+
 
 ##### p.203 SQL 조건 누락 수정
 
