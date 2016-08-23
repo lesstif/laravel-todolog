@@ -7,8 +7,8 @@
 * [p.112 첫 번째 줄 오타 수정](#p112-첫-번째-줄-오타-수정)
 * [p.124 오타 수정](#p124-오타-수정)
 * [p.159 오타 수정](#p159-오타-수정)
+* [p.197 Route::controller deprecated](#p197-route-controller-deprecated)
 * [p.203 SQL 조건 누락 수정](#p203-sql-조건-누락-수정)
-* [p.349 오타 수정](#p349-오타-수정)
 * [p.424 cron 스케줄러 설정](#p424-cron-스케줄러-설정)
 * [14.6 동적 프로퍼티/메서드 생성](#146-동적-프로퍼티메서드-생성)
 
@@ -103,6 +103,15 @@ ADD **Commnet** varchar(100)
 
 ADD **Comment** varchar(100) 
 
+##### p.197 route controller deprecated
+
+[이동한](https://github.com/linuxwife)님이 알려주신 대로 라라벨 5.2 부터 *Route::controller* 는 deprecated 되었고 5.3에서는 삭제 예정입니다.
+
+책 p.148 에서도 암시적 컨트롤러는 전체 라우팅이 가려지므로 권장하지 않는다고 기술했는데 p.197 에서 사용한 이유는 ORM 테스트용 예제 메서드를 일일이 라우팅에 기술하기 불편했기 때문입니다.
+
+독자분들은 실전에서는 *Route::controller* 를 사용하지 않으시기 바랍니다.
+
+
 ##### p.203 SQL 조건 누락 수정
 
 **변경전**
@@ -131,7 +140,6 @@ RepositoryInterface $repos = new MySQLUserRepository();
 
 ```php
 $repos = new MySQLUserRepository();
-```
 
 **변경전**
 
@@ -141,44 +149,15 @@ where('id', '>', 10)와 같이 공백이 있는 다음과 같은 PDO
 
 **변경후**
 
-설명대로라면 아래와 같이 공백이 추가되어야 하며 라라벨 5.2에서는 PDOException 이 발생하지 않습니다.
+설명대로라면 아래와 같이 공백이 추가되어야 합니다. 또 라라벨 5.2 에서는 PDOException 이 발생하지 않습니다.
 
 ```
 where('id', '> ', 10)와 같이 공백이 있는 다음과 같은 PDO
 ```
 
-##### p.349 오타 수정
+##### p.310 세션 키 이름 오타
 
-349페이지: 부트스트랩 datetimepicker 사용 코드
-
-**변경전**
-
-```php
-$("#due_date").datepicker({
-```
-
-**변경후**
-
-```php
-$("#due_date").datetimepicker({
-```
-
-폼에서 기한 부분 name attribute가 빠져 있어서 업데이트가 되지 않습니다.(laravel-todolog#18)
-
-**변경전**
-
-```php
-<input type="text" class="form-control" value="{{ $task->due_date }}">
-```
-
-**변경후**
-
-```php
-<input type="text" class="form-control" name="due_date" value="{{ $task->due_date }}">
-```
-
-
-
+세션 키 이름으로 'github**_**id' 를 선언하고 사용할 때는 'github**-**id' 로 사용. - 대신 _ 를 사용해야 함.
 
 #### 14.5 익명 함수
 
