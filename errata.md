@@ -8,6 +8,7 @@
 * [p.124 오타 수정](#p124-오타-수정)
 * [p.159 오타 수정](#p159-오타-수정)
 * [p.203 SQL 조건 누락 수정](#p203-sql-조건-누락-수정)
+* [p.349 오타 수정](#p349-오타-수정)
 * [p.424 cron 스케줄러 설정](#p424-cron-스케줄러-설정)
 * [14.6 동적 프로퍼티/메서드 생성](#146-동적-프로퍼티메서드-생성)
 
@@ -130,6 +131,7 @@ RepositoryInterface $repos = new MySQLUserRepository();
 
 ```php
 $repos = new MySQLUserRepository();
+```
 
 **변경전**
 
@@ -139,11 +141,44 @@ where('id', '>', 10)와 같이 공백이 있는 다음과 같은 PDO
 
 **변경후**
 
-설명대로라면 아래와 같이 공백이 추가되어야 합니다. 또 라라벨 5.2 에서는 PDOException 이 발생하지 않습니다.
+설명대로라면 아래와 같이 공백이 추가되어야 하며 라라벨 5.2에서는 PDOException 이 발생하지 않습니다.
 
 ```
 where('id', '> ', 10)와 같이 공백이 있는 다음과 같은 PDO
 ```
+
+##### p.349 오타 수정
+
+349페이지: 부트스트랩 datetimepicker 사용 코드
+
+**변경전**
+
+```php
+$("#due_date").datepicker({
+```
+
+**변경후**
+
+```php
+$("#due_date").datetimepicker({
+```
+
+폼에서 기한 부분 name attribute가 빠져 있어서 업데이트가 되지 않습니다.(laravel-todolog#18)
+
+**변경전**
+
+```php
+<input type="text" class="form-control" value="{{ $task->due_date }}">
+```
+
+**변경후**
+
+```php
+<input type="text" class="form-control" name="due_date" value="{{ $task->due_date }}">
+```
+
+
+
 
 #### 14.5 익명 함수
 
