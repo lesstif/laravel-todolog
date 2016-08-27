@@ -19,90 +19,56 @@
 
 생성자를 통해 의존성을 주입하므로 implements 구문 불필요
 
-**변경전**
-
-```php
-class UserRepository implements RepositoryInterface {
+```diff
+-class UserRepository implements RepositoryInterface {
++class UserRepository {
 ```
 
-**변경후**
-
 ```php
-class UserRepository {
+
 ```
 
 ##### p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(*RepositoryInterface*) 삭제
 
-**변경전**
-
-```php
-RepositoryInterface $repos = new UserRepository();
+```diff
+-RepositoryInterface $repos = new UserRepository();
++$repos = new UserRepository();
 ```
 
-**변경후**
-
-```php
-$repos = new UserRepository();
-```
-
-**변경전**
-
-```php
-RepositoryInterface $repos = new MySQLUserRepository();
-```
-
-**변경후**
-
-```php
-$repos = new MySQLUserRepository();
+```diff
+-RepositoryInterface $repos = new MySQLUserRepository();
++$repos = new MySQLUserRepository();
 ```
 
 ##### p.102 오타 수정
 
 Illuminate 패키지 네임스페이스 오타 수정
 
-**변경전**
-
-```php
-use llluminate\Http\Response;
+```diff
+-use llluminate\Http\Response;
++use Illuminate\Http\Response;
 ```
-
-**변경후**
-
-```php
-use Illuminate\Http\Response;
-```
-
 
 ##### p.112 첫 번째 줄 오타 수정
 
-**변경전**
-
-\>는 **\&lt;**로 변경
-
-**변경후**
-
-\>는 **\&gt;**로 변경
+```diff
+-\>는 \&lt;로 변경
++\>는 \&gt;로 변경
+```
 
 ##### p.124 오타 수정
 
-**변경전**
-
-테이블에 입력한 key와 **a**에서 
-
-**변경후**
-
-테이블에 입력한 key와 **1번**에서
+```diff
+-테이블에 입력한 key와 a에서 
++테이블에 입력한 key와 1번에서
+```
 
 ##### p.159 오타 수정
 
-**변경전**
-
-ADD **Commnet** varchar(100) 
-
-**변경후**
-
-ADD **Comment** varchar(100) 
+```diff
+-ADD Commnet varchar(100) 
++ADD Comment varchar(100) 
+```
 
 ##### p.197 route controller deprecated
 
@@ -133,27 +99,15 @@ select * from task where id > '10' and id < '20' and name like 'Ta%' order by na
 
 **변경전**
 
-```php
-RepositoryInterface $repos = new MySQLUserRepository();
-```
-
-**변경후**
-
-```php
-$repos = new MySQLUserRepository();
-```
-
-**변경전**
-
 ```
 where('id', '>', 10)와 같이 공백이 있는 다음과 같은 PDO
 ```
 
 **변경후**
 
-설명대로라면 아래와 같이 공백이 추가되어야 합니다. 또 라라벨 5.2 에서는 PDOException 이 발생하지 않습니다.
+설명대로라면 아래와 같이 공백이 추가되어야 하지만 누락되어 있습니다. 그리고 라라벨 5.2 에서는 PDOException 이 발생하지 않습니다.
 
-```
+```php
 where('id', '> ', 10)와 같이 공백이 있는 다음과 같은 PDO
 ```
 
@@ -167,64 +121,40 @@ where('id', '> ', 10)와 같이 공백이 있는 다음과 같은 PDO
 
 **변경전**
 
-```php
-$("#due_date").datepicker({
-```
-
-**변경후**
-
-```php
-$("#due_date").datetimepicker({
+```diff
+-$("#due_date").datepicker({
++$("#due_date").datetimepicker({
 ```
 
 폼에서 기한 부분 name attribute가 빠져 있어서 업데이트가 되지 않습니다.(laravel-todolog#18)
 
 **변경전**
 
-```php
-<input type="text" class="form-control" value="{{ $task->due_date }}">
-```
-
-**변경후**
-
-```php
-<input type="text" class="form-control" name="due_date" value="{{ $task->due_date }}">
+```diff
+-<input type="text" class="form-control" value="{{ $task->due_date }}">
++<input type="text" class="form-control" name="due_date" value="{{ $task->due_date }}">
 ```
 
 #### 14.5 익명 함수
 
 ##### p.447 익명 함수 뒤에 세미콜론(;) 누락
 
-**예제 14.18 : 변경전**
+**예제 14.18 : 
 
-```php
+```diff
 $hello = function ($name, $age) {
   return "name:" . $name . " age: " . $age;
-}
+-}
++};
 ```
 
-**변경후**
+**예제 14.19 : 
 
-```php
-$hello = function ($name, $age) {
-  return "name:" . $name . " age: " . $age;
-};	// 수정
-```
-
-**예제 14.19 : 변경전**
-
-```php
+```diff
 $hello = function() use ($name, $age) {
   return "name:" . $name . " age: " . $age;
-}
-```
-
-**변경후**
-
-```php
-$hello = function() use ($name, $age) {
-  return "name:" . $name . " age: " . $age;
-};	// 수정
+-}
++};
 ```
 
 ##### p.424 cron 스케줄러 설정
