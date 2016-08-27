@@ -24,10 +24,6 @@
 +class UserRepository {
 ```
 
-```php
-
-```
-
 ##### p.36 ~ p.38 까지 변수 선언 앞에 타입 지정(*RepositoryInterface*) 삭제
 
 ```diff
