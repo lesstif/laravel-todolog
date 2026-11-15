@@ -1,5 +1,56 @@
 # 쉽게 배우는 라라벨 5 프로그래밍 실전 예제 코드
 
+## Current runtime and setup
+
+The book's Laravel 5.2 example has been migrated to **PHP 8.5** and
+**Laravel 13**. Neither PHP nor current Laravel releases has an LTS edition;
+these are the latest supported stable branches as of November 11, 2026.
+See [upgrade.md](upgrade.md) for compatibility changes and deployment notes,
+and [security-fix.md](security-fix.md) for the task authorization fix.
+
+Requirements: PHP 8.5 with the extensions required by Composer, Composer 2.9+,
+and a supported database (for example SQLite locally or MySQL 8.0+).
+Redis is only required when `CACHE_STORE=redis`; the default file cache reads
+application counts directly from the database. Enable PDO SQLite to run the tests.
+
+For a new local installation:
+
+```sh
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+Configure the database in `.env`. For a local setup without MySQL or Redis,
+create an empty `database/local.sqlite` file and use its absolute path:
+
+```dotenv
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/laravel-todolog/database/local.sqlite
+CACHE_STORE=file
+```
+
+Then run:
+
+```sh
+php artisan migrate
+php artisan serve --host=127.0.0.1
+```
+
+Mail defaults to the local log transport. Configure SMTP or Mailgun before
+sending real mail. Never replace an existing deployment's `APP_KEY`.
+
+Run the tests and dependency audit:
+
+```sh
+composer test
+composer audit
+```
+
+The original book-era instructions below are retained for reference.
+Their PHP/Laravel version output and Homestead recommendations are historical,
+not the current requirements.
+
 실전 프로젝트 파일 및 코드이며 실제 동작하는 소스는 **[https://todolog.lesstif.com](https://todolog.lesstif.com)** 에서 확인할 수 있습니다. 
 
 소스 관련 문의 및 오탈자 신고는 [깃허브 이슈 페이지](https://github.com/lesstif/laravel-todolog/issues/new) 에 해주세요
@@ -117,7 +168,7 @@ composer install
 
 1. 데이타 마이그레이션을 적용합니다.
     ```
-    php artisan migrate:refresh
+     php artisan migrate
     ```
 
 1. 초기 데이타를 생성합니다.
@@ -134,15 +185,14 @@ composer install
 
 1. mailgun 으로 이메일을 전송하기 위해 .env 에 mailgun 설정을 추가합니다.
     ```
-    MAIL_DRIVER=mailgun
+    MAIL_MAILER=mailgun
     MAILGUN_DOMAIN=your-host.mailgun.org
     MAILGUN_SECRET=key-your-mailgun-secret
     ```
 
-1. 운영 환경일 경우 웹 서버 구동 계정(Ex: ubuntu의 경우 www-data)이 *bootstrap/cache/* 와 *storage* 폴더를 읽고 쓸 수 있도록 권한을 줘야 합니다.
-    ```sh
-    chmod -R 777 bootstrap/cache/ storage
-    ```
+1. 운영 환경에서는 웹 서버 구동 계정(예: www-data)이 *bootstrap/cache/* 와
+   *storage* 폴더를 읽고 쓸 수 있도록 소유권과 필요한 권한만 설정합니다.
+   모든 사용자에게 쓰기 권한을 주는 `chmod -R 777`은 사용하지 않습니다.
 
 ### 테스트
 

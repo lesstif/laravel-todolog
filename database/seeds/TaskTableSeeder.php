@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class TaskTableSeeder extends Seeder
@@ -18,18 +20,18 @@ class TaskTableSeeder extends Seeder
             '쇼핑' => '사야할 것들',
         ];
 
-        $users = App\User::all();    // 2
+        $users = \App\User::all();    // 2
 
         foreach($users as $u) {        //3
             foreach ($array as $name => $desc) {    //4
-                $proj = factory(App\Project::class, 1)    //5
+                $proj = \App\Project::factory()    //5
                 ->create([
                     'name' => $name,
                     'description' => $desc,
                     'user_id' => $u->id,
                 ]);
 
-                foreach (factory(App\Task::class, 10)->make() as $task) {    //6
+                foreach (\App\Task::factory()->count(10)->for($proj)->make() as $task) {    //6
                     $proj->tasks()->save($task);
                 }
             }

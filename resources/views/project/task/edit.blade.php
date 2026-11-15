@@ -25,7 +25,7 @@
                 <div>
                     <select class="form-control" name="project_id">
                         @foreach($projects as $proj)
-                            <option value="{{$proj->id}}" {{ ($task->project->id == $proj->id) ? "selected" : "" }}>{{$proj->name}}</option>
+                            <option value="{{$proj->id}}" {{ (old('project_id', $task->project_id) == $proj->id) ? "selected" : "" }}>{{$proj->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -34,14 +34,14 @@
             <div class="form-group">
                 <label for="project.task.name">태스크 명</label>
                 <div>
-                    <input type="text" class="form-control" name="name" value="{{ $task->name }}">
+                    <input type="text" class="form-control" name="name" value="{{ old('name', $task->name) }}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="설명">설명</label>
                 <div>
-                    <textarea class="form-control" rows="3" name="description">{{ $task->description }}</textarea>
+                    <textarea class="form-control" rows="3" name="description">{{ old('description', $task->description) }}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
                 <div>
                     <select class="form-control" name="priority">
                         @foreach(['낮음', '보통', '높음'] as $p)
-                            <option value="{{$p}}" {{ ($task->priority === $p) ? "selected" : "" }}>{{$p}}</option>
+                            <option value="{{$p}}" {{ (old('priority', $task->priority) === $p) ? "selected" : "" }}>{{$p}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -59,7 +59,7 @@
                 <div>
                     <select class="form-control" name="status">
                         @foreach(['등록', '진행', '완료'] as $s)
-                            <option value="{{$s}}" {{ ($task->status === $s) ? "selected" : "" }}>{{$s}}</option>
+                            <option value="{{$s}}" {{ (old('status', $task->status) === $s) ? "selected" : "" }}>{{$s}}</option>
                         @endforeach
                     </select>
                 </div>

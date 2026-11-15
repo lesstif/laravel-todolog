@@ -1,5 +1,9 @@
 <?php
 
+namespace Database\Seeders;
+
+use Illuminate\Support\Facades\Redis;
+
 use Illuminate\Database\Seeder;
 
 /**
@@ -29,17 +33,17 @@ class MassiveSeeder extends Seeder
 
 		for($i = 1; $i < $iteration + 1; $i++) {
 			echo "$i 번째 model factory 생성중\n";
-			$users = factory(App\User::class, $userCnt)->create();
+			$users = \App\User::factory()->count($userCnt)->create();
 
 			$total['user'] += $userCnt;
 			foreach($users as $user) {
-				foreach(factory(App\Project::class, $projectCnt)->make() as $project) {
+				foreach(\App\Project::factory()->count($projectCnt)->for($user, 'user')->make() as $project) {
 
 					$user->projects()->save($project);
 
 					$total['project'] += 1;
 
-					foreach (factory(App\Task::class, $taskCnt)->make() as $task) {
+					foreach (\App\Task::factory()->count($taskCnt)->for($project)->make() as $task) {
 						$project->tasks()->save($task);
 
 						$total['task'] += 1;
@@ -52,9 +56,9 @@ class MassiveSeeder extends Seeder
 
 		//redis에 반영
 		if (\Config::get('cache.default') === 'redis') {
-			\Redis::set('user:count', App\User::count());
-			\Redis::set('project:count', App\Project::count());
-			\Redis::set('task:count', App\Task::count());
+			Redis::set('user:count', \App\User::count());
+			Redis::set('project:count', \App\Project::count());
+			Redis::set('task:count', \App\Task::count());
 		}
 
     }

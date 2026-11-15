@@ -24,9 +24,11 @@ class StoreTaskRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|unique:tasks|max:20',
-            'priority' => 'in:낮음,보통,높음',
-            'due_date' => 'date|after:today',
+            'name' => 'bail|required|string|unique:tasks|max:20',
+            'description' => 'nullable|string',
+            'priority' => 'required|in:낮음,보통,높음',
+            'status' => 'required|in:등록,진행,완료',
+            'due_date' => 'nullable|date|after:today',
         ];
     }
 

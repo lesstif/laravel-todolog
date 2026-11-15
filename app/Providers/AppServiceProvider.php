@@ -2,34 +2,27 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function register(): void
     {
-        // 휴대폰 국번 확인
-        \Validator::extend('mobile_phone', function($attribute, $value, $parameters, $validator) {
-            $phone = str_replace ('-', '', $value);
-            $mobile_sp = substr($phone, 0, 3);
-
-            return is_numeric($phone) && in_array($mobile_sp, ['010', '011', '017', '019']);
-        });
-
+        $this->app->useLangPath(resource_path('lang'));
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function boot(): void
     {
-        //
+        Paginator::defaultView('pagination::bootstrap-3');
+        Paginator::defaultSimpleView('pagination::simple-bootstrap-3');
+
+        Validator::extend('mobile_phone', function ($attribute, $value) {
+            $phone = str_replace('-', '', $value);
+
+            return is_numeric($phone)
+                && in_array(substr($phone, 0, 3), ['010', '011', '017', '019']);
+        });
     }
 }

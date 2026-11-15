@@ -46,6 +46,8 @@ return [
 
     'encrypt' => false,
 
+    'serialization' => 'json',
+
     /*
     |--------------------------------------------------------------------------
     | Session File Location
@@ -148,7 +150,7 @@ return [
     |
     */
 
-    'secure' => false,
+    'secure' => env('SESSION_SECURE_COOKIE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -162,5 +164,7 @@ return [
     */
 
     'http_only' => true,
+
+    'same_site' => 'lax',
 
 ];

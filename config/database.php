@@ -50,6 +50,7 @@ return [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
+            'foreign_key_constraints' => true,
         ],
 
         'mysql' => [
@@ -91,7 +92,10 @@ return [
     |
     */
 
-    'migrations' => 'migrations',
+    'migrations' => [
+        'table' => 'migrations',
+        'update_date_on_publish' => true,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +110,11 @@ return [
 
     'redis' => [
 
-        'cluster' => false,
+        'client' => env('REDIS_CLIENT', 'predis'),
+        'options' => [
+            'cluster' => 'redis',
+            'prefix' => env('REDIS_PREFIX', ''),
+        ],
 
         'default' => [
             'host' => env('REDIS_HOST', 'localhost'),

@@ -3,13 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'description', 'due_date', 'priority', 'status'];
 
     // 완료 기한
-    protected $dates = ['due_date'];
+    protected $casts = ['due_date' => 'datetime'];
 
     public function project()
     {
@@ -21,7 +24,7 @@ class Task extends Model
         $now = \Carbon\Carbon::now();
 
         return $query->where('due_date', '>', $now)
-             ->where('due_date', '<', $now->copy()->addDays($days));
+             ->where('due_date', '<', $now->copy()->addDays((int) $days));
     }
 
     /**

@@ -7,6 +7,7 @@
 @section('content')
 
     <div class="col-md-12">
+        @include('partials.validation-errors')
 
         <form class="form-horizontal" role="form" method="GET" action="{{ route('task.index')}}">
             <div class="container">

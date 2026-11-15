@@ -1,8 +1,11 @@
 /vendor
 /node_modules
+/.phpunit.cache
+/.phpunit.result.cache
 Homestead.yaml
 Homestead.json
 .env
+/database/*.sqlite*
 
 ### Vim ###
 [._]*.s[a-w][a-z]

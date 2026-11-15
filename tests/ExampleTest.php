@@ -1,19 +1,18 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+namespace Tests;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function testBasicExample()
+    use RefreshDatabase;
+
+    public function testWelcomePageShowsProjectCounts(): void
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('라라벨 Todo 사이트')
+            ->assertSee('총 가입자 수');
     }
 }

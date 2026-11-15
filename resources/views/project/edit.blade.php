@@ -7,6 +7,8 @@
 @section('content')
 
     <div class="col-md-12">
+        @include('partials.validation-errors')
+
         <form class="form-horizontal" role="form" method="POST" action="{{ route('project.update', $proj->id) }}">
 
             {{-- method spoofing --}}
@@ -17,14 +19,14 @@
             <div class="form-group">
                 <label for="Project name">프로젝트 명</label>
                 <div>
-                    <input type="text" class="form-control" name="name" value="{{ $proj->name }}">
+                    <input type="text" class="form-control" name="name" value="{{ old('name', $proj->name) }}">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="설명">설명</label>
                 <div>
-                    <textarea class="form-control" rows="3" name="description">{{ $proj->description }}</textarea>
+                    <textarea class="form-control" rows="3" name="description">{{ old('description', $proj->description) }}</textarea>
                 </div>
             </div>
             <div class="form-group">

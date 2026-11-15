@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redis;
+
 use App\Project;
 use App\Task;
 use Illuminate\Http\Request;
@@ -62,7 +64,9 @@ class ProjectTaskController extends Controller
 
         $task->save();    //DBMS 저장
 
-        \Redis::incr('task:count');
+        if (config('cache.default') === 'redis') {
+            Redis::incr('task:count');
+        }
 
         return redirect(route('project.task.index', $task->project->id))
             ->with('message', $task->name . ' 가 생성 되었습니다.');
@@ -91,11 +95,8 @@ class ProjectTaskController extends Controller
         $user = \Auth::user();
         $projects = $user->projects()->get();
 
-        $task = Task::findOrFail($taskId);
-
-        if($task->project->id != $projId) {
-            abort(403, '잘못된 접근입니다.');
-        }
+        $project = $user->projects()->findOrFail($projId);
+        $task = $project->tasks()->findOrFail($taskId);
 
         return view('project.task.edit')
             ->with('projects', $projects)
@@ -112,16 +113,26 @@ class ProjectTaskController extends Controller
      */
     public function update(Request $request, $projId, $taskId)
     {
-        $task = Task::findOrFail($taskId);
+        $user = \Auth::user();
+        $project = $user->projects()->findOrFail($projId);
+        $task = $project->tasks()->findOrFail($taskId);
 
         $project_id = $request->get('project_id');
 
         // project id를 변경할 경우
-        if ($project_id != $task->project->id) {
+        if ($project_id != $task->project_id) {
             // 변경된 project 검색
-            $project = Project::findOrFail($project_id);
+            $project = $user->projects()->findOrFail($project_id);
             $task->project()->associate($project);
         }
+
+        $request->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'nullable|string',
+            'priority' => 'required|in:낮음,보통,높음',
+            'status' => 'required|in:등록,진행,완료',
+            'due_date' => 'nullable|date',
+        ]);
 
         $task->update([        // 2
             'name' => $request->get('name'),
@@ -139,16 +150,20 @@ class ProjectTaskController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $projId
+     * @param  int  $taskId
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($projId, $taskId)
     {
-        $task = Task::findOrFail($id);
+        $project = \Auth::user()->projects()->findOrFail($projId);
+        $task = $project->tasks()->findOrFail($taskId);
 
         $task->delete();   // 삭제
 
-        \Redis::decr('task:count'); // 갯수 감소
+        if (config('cache.default') === 'redis') {
+            Redis::decr('task:count'); // 갯수 감소
+        }
 
         return redirect(route('project.task.index', $task->project->id))
             ->with('message', $task->name . '이 삭제되었습니다.');

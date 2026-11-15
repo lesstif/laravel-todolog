@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-use Redis;
+use Illuminate\Support\Facades\Redis;
 
 class WelcomeController extends Controller
 {

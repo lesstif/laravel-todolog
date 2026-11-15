@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -25,7 +27,7 @@ class UserTableSeeder extends Seeder
         ];
 
         foreach($users as $u) {
-            App\User::create($u);
+            \App\User::create($u);
         }
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redis;
+
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -41,6 +43,11 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'nullable|string',
+        ]);
+
         $proj = new Project([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
@@ -52,7 +59,9 @@ class ProjectController extends Controller
 
         $proj->save();
 
-        \Redis::incr('project:count');
+        if (config('cache.default') === 'redis') {
+            Redis::incr('project:count');
+        }
 
         \Log::info('Project 등록 성공',
             ['user-id'=> $user->id, 'project-id'=>$proj->id]
@@ -105,6 +114,11 @@ class ProjectController extends Controller
     {
         $proj = Project::findOrFail($id);
 
+        $request->validate([
+            'name' => 'required|string|max:20',
+            'description' => 'nullable|string',
+        ]);
+
         $proj->update([    //1
             'name' => $request->get('name'),
             'description' => $request->get('description'),
@@ -131,7 +145,9 @@ class ProjectController extends Controller
 
         $proj->delete();   // 삭제
 
-        \Redis::decr('project:count'); //
+        if (config('cache.default') === 'redis') {
+            Redis::decr('project:count');
+        }
 
         return redirect('/project')
             ->with('message', '프로젝트 ' . $proj->name  . ' 이 삭제되었습니다.');

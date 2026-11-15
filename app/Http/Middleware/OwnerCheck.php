@@ -19,9 +19,9 @@ class OwnerCheck
         if (\Auth::guard($guard)->check()) {
 
             // 라우트에서 현재 프로젝트 id 추출
-            $pid = \Route::current()->getParameter('project');
+            $pid = $request->route('project');
             if (isset($pid)) {
-                $project = Project::find($pid);
+                $project = Project::findOrFail($pid);
 
                 $user = \Auth::user();
                 if ($project->user->id != $user->id) {

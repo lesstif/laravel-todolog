@@ -2,130 +2,126 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-use Validator;
+use Illuminate\Support\Facades\Redis;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+        $this->middleware('guest', ['except' => 'logout']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function showLoginForm()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'phone' => 'required|mobile_phone|min:11|max:13',
+        return view('auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
         ]);
+
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+            throw ValidationException::withMessages(['email' => __('auth.failed')]);
+        }
+
+        $request->session()->regenerate();
+
+        return redirect()->intended('/home');
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
+    public function showRegistrationForm()
     {
-        \Redis::incr('user:count');
+        return view('auth.register');
+    }
 
-        return User::create([
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', 'mobile_phone', 'min:11', 'max:13'],
+        ]);
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             'phone' => $data['phone'],
         ]);
+        if (config('cache.default') === 'redis') {
+            Redis::incr('user:count');
+        }
+        event(new Registered($user));
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return redirect('/home');
     }
 
-    /**
-     * 사용자를 깃허브 인증 페이지로 전환
-     *
-     * @return Response
-     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
     public function redirectToGitHub()
     {
         return Socialite::driver('github')->redirect();
     }
 
-    /**
-     * 깃허브에서 인증이 완료된 사용자 정보를 받아서 처리
-     *
-     * @return Response
-     */
     public function handleGitHubCallback(Request $request)
     {
         try {
-            $user = Socialite::driver('github')->user();
-        } catch (Exception $e) {
-            return redirect('auth/github');
+            $githubUser = Socialite::driver('github')->user();
+        } catch (\Laravel\Socialite\Two\InvalidStateException $exception) {
+            return redirect('/login')->withErrors(['email' => __('auth.failed')]);
         }
 
-        $user = $this->findOrCreateUser($user);
+        $user = $this->findOrCreateUser($githubUser);
+        Auth::login($user);
+        $request->session()->regenerate();
+        $request->session()->put('github_id', $user->id);
 
-        \Auth::login($user );
-
-        $request->session()->put('github_id', $user->id); // 세션에 github_id 추가
-
-        return redirect()->intended($this->redirectPath());
+        return redirect()->intended('/home');
     }
 
-    /**
-     * 깃허브 인증에 성공한 후 받은 사용자 정보가 데이터베이스에 없을 경우 생성하고 있을 경우 가져옴
-     *
-     * @param $githubUser 깃허브에서 전달받은 사용자 정보
-     * @return User
-     */
     private function findOrCreateUser($githubUser)
     {
-        if ($user = User::where('github_id', $githubUser->id)->first()) {
+        if ($user = User::where('github_id', $githubUser->getId())->first()) {
             return $user;
         }
 
-        return User::create([
-            'name' => $githubUser->name,
-            'email' => $githubUser->email,
-            'github_id' => $githubUser->id,
+        // Do not implicitly link an existing account using an OAuth email.
+        if (!$githubUser->getEmail()
+            || User::where('email', $githubUser->getEmail())->exists()) {
+            throw ValidationException::withMessages(['email' => __('auth.failed')]);
+        }
+
+        $user = User::create([
+            'name' => $githubUser->getName() ?: $githubUser->getNickname(),
+            'email' => $githubUser->getEmail(),
+            'github_id' => $githubUser->getId(),
         ]);
+        if (config('cache.default') === 'redis') {
+            Redis::incr('user:count');
+        }
+
+        return $user;
     }
-
-
 }

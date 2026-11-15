@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 use App\Http\Requests;
 
@@ -17,6 +19,14 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $user = \Auth::user();
+
+        $validator = Validator::make($request->query(), [
+            'start_date' => 'nullable|date_format:Y-m-d H:i:s',
+            'end_date' => 'nullable|date_format:Y-m-d H:i:s',
+        ]);
+        if ($validator->fails()) {
+            throw (new ValidationException($validator))->redirectTo(route('task.index'));
+        }
 
         // 시작일 설정
         if(!empty($request->get('start_date'))) {

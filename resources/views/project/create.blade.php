@@ -10,6 +10,8 @@
 
         <h3>프로젝트 등록</h3>
 
+        @include('partials.validation-errors')
+
         <form class="form-horizontal" role="form" method="POST" action="{{ route('project.store') }}">
             {{ csrf_field() }}
 
